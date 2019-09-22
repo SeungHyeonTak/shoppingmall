@@ -9,12 +9,14 @@ def index(request):
     })
 
 
+# 회원가입
 class RegisterView(FormView):
     template_name = 'register.html'
     form_class = RegisterForm
     success_url = '/'  # 어떤 주소로 이동 시킬때
 
 
+# 로그인
 class LoginView(FormView):
     template_name = 'login.html'
     form_class = LoginForm
