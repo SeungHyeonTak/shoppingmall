@@ -41,7 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'rest_framework',
     'drf_yasg',
+    'django_extensions',
 ]
+
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
