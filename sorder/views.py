@@ -8,6 +8,18 @@ from .forms import RegisterForm
 from .models import Order
 from sproduct.models import Product
 from suser.models import User
+from rest_framework import generics, mixins
+from .serializers import OrderSerializer
+
+
+class OrderListAPI(generics.GenericAPIView, mixins.ListModelMixin):
+    serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        return Order.objects.all().order_by('id')
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
 
 
 @method_decorator(login_required, name='dispatch')

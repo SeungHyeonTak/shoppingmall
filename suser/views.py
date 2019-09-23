@@ -3,6 +3,28 @@ from django.views.generic.edit import FormView
 from django.contrib.auth.hashers import make_password
 from .forms import RegisterForm, LoginForm
 from .models import User
+from rest_framework import generics, mixins
+from .serializers import UserSerializer
+
+
+class UserListAPI(generics.GenericAPIView, mixins.ListModelMixin):
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        return User.objects.all().order_by('id')
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+
+class UserDetailAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        return User.objects.all().order_by('id')
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
 
 
 def index(request):

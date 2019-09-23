@@ -9,7 +9,7 @@ class User(models.Model):
                              choices=(
                                  ('admin', 'admin'),
                                  ('user', 'user')
-                             ))
+                             ), default='user')
 
     def __str__(self):
         return self.email
