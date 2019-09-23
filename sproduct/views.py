@@ -11,6 +11,17 @@ from .serializers import ProductSerializer
 
 
 class ProductListAPI(generics.GenericAPIView, mixins.ListModelMixin):
+    """
+    쇼핑몰 목록 리스트를 불러오는 API
+
+    ---
+    # 내용
+        - name : 상품명
+        - price : 상품가격
+        - description : 상품설명
+        - stock : 재고
+        - register_date : 등록날짜
+    """
     serializer_class = ProductSerializer
 
     def get_queryset(self):
@@ -21,6 +32,17 @@ class ProductListAPI(generics.GenericAPIView, mixins.ListModelMixin):
 
 
 class ProductDetailAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
+    """
+    쇼핑몰 리스트에서 특정 id를 가지는 데이터 API
+
+    ---
+    # 내용
+        - name : 상품명
+        - price : 상품가격
+        - description : 상품설명
+        - stock : 재고
+        - register_date : 등록날짜
+    """
     serializer_class = ProductSerializer
 
     def get_queryset(self):

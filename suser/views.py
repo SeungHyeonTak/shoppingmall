@@ -8,6 +8,16 @@ from .serializers import UserSerializer
 
 
 class UserListAPI(generics.GenericAPIView, mixins.ListModelMixin):
+    """
+    쇼핑몰 유저 목록 리스트를 불러오는 API
+
+    ---
+    # 내용
+        - email : 유저 email
+        - password : 비밀번호
+        - register_data : 등록날짜
+        - level : 등급(user: 일반 유저 / admin: 관리자)
+    """
     serializer_class = UserSerializer
 
     def get_queryset(self):
@@ -18,6 +28,16 @@ class UserListAPI(generics.GenericAPIView, mixins.ListModelMixin):
 
 
 class UserDetailAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
+    """
+    쇼핑몰 유저의 데이터를 불러오는 API
+
+    ---
+    # 내용
+        - email : 유저 email
+        - password : 비밀번호
+        - register_data : 등록날짜
+        - level : 등급(user: 일반 유저 / admin: 관리자)
+    """
     serializer_class = UserSerializer
 
     def get_queryset(self):

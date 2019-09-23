@@ -13,6 +13,16 @@ from .serializers import OrderSerializer
 
 
 class OrderListAPI(generics.GenericAPIView, mixins.ListModelMixin):
+    """
+    쇼핑몰 주문 목록의 데이터를 불러오는 API
+
+    ---
+    # 내용
+        - user : 사용
+        - product : 상품
+        - quantity : 수량
+        - register_date : 등록날짜
+    """
     serializer_class = OrderSerializer
 
     def get_queryset(self):
