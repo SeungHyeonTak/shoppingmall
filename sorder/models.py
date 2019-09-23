@@ -1,9 +1,11 @@
 from django.db import models
+from sproduct.models import Product
+from suser.models import User
 
 
 class Order(models.Model):
-    user = models.ForeignKey('suser.User', on_delete=models.CASCADE, verbose_name='사용자')
-    product = models.ForeignKey('sproduct.Product', on_delete=models.CASCADE, verbose_name='상품')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='사용자')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='상품')
     quantity = models.IntegerField(verbose_name='수량')
     register_date = models.DateTimeField(auto_now_add=True, verbose_name='등록날짜')
 

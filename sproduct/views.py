@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormView
 from .models import Product
 from .forms import RegisterForm
+from sorder.forms import RegisterForm as OrderForm  # order안에 forms로 명령
 
 
 class ProductList(ListView):
@@ -21,3 +22,8 @@ class ProductDetail(DetailView):
     template_name = 'product_detail.html'
     queryset = Product.objects.all()
     context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):  # DetailView에다가 별도로 form을 만드는데 원하는 데이터를 넣을 수 있도록 함수 제공
+        context = super().get_context_data(**kwargs)
+        context['form'] = OrderForm(self.request)
+        return context
