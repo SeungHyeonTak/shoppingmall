@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from suser.views import index, RegisterView, LoginView
+from suser.views import index, RegisterView, LoginView, logout
 from sproduct.views import ProductList, ProductCreate, ProductDetail
 from sorder.views import OrderCreate, OrderList
 
@@ -24,6 +24,7 @@ urlpatterns = [
     path('', index),
     path('register/', RegisterView.as_view()),
     path('login/', LoginView.as_view()),
+    path('logout/', logout),
     path('product/', ProductList.as_view()),
     path('product/create/', ProductCreate.as_view()),
     path('product/<int:pk>/', ProductDetail.as_view()),
