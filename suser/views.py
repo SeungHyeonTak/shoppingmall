@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
+from django.contrib.auth.hashers import make_password
 from .forms import RegisterForm, LoginForm
+from .models import User
 
 
 def index(request):
@@ -15,6 +17,16 @@ class RegisterView(FormView):
     form_class = RegisterForm
     success_url = '/'  # 어떤 주소로 이동 시킬때
 
+    def form_valid(self, form):
+        user = User(
+            email=form.data.get('email'),
+            password=make_password(form.data.get('password')),
+            level='user'
+        )
+        user.save()
+
+        return super().form_valid(form)
+
 
 # 로그인
 class LoginView(FormView):
@@ -24,7 +36,7 @@ class LoginView(FormView):
 
     # 유효성 검사가 끝났을때, 모든 데이터가 정상적일때 (로그인 데이터가 정상적일때) 들어오는 함수
     def form_valid(self, form):
-        self.request.session['user'] = form.email
+        self.request.session['user'] = form.data.get('email')
         return super().form_valid(form)
 
 

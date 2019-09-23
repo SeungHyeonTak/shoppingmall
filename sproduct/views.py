@@ -20,6 +20,16 @@ class ProductCreate(FormView):
     form_class = RegisterForm
     success_url = '/product/'
 
+    def form_valid(self, form):
+        product = Product(
+            name=form.data.get('name'),
+            price=form.data.get('price'),
+            description=form.data.get('description'),
+            stock=form.data.get('stock')
+        )
+        product.save()
+        return super().form_valid(form)  # 오버라이딩을 했기에 부모에 있는 함수를 호출해줘야한다.
+
 
 class ProductDetail(DetailView):
     template_name = 'product_detail.html'

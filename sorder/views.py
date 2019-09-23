@@ -2,9 +2,12 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from django.views.generic import ListView
 from django.utils.decorators import method_decorator
+from django.db import transaction
 from suser.decorators import login_required
 from .forms import RegisterForm
 from .models import Order
+from sproduct.models import Product
+from suser.models import User
 
 
 @method_decorator(login_required, name='dispatch')
@@ -12,8 +15,22 @@ class OrderCreate(FormView):
     form_class = RegisterForm
     success_url = '/product/'
 
+    def form_valid(self, form):
+        with transaction.atomic():
+            prod = Product.objects.get(pk=form.data.get('product'))
+            order = Order(
+                quantity=form.data.get('quantity'),
+                product=prod,
+                user=User.objects.get(email=self.request.session.get('user'))
+            )
+            order.save()
+            prod.stock -= int(form.data.get("quantity"))
+            prod.save()
+
+        return super().form_valid(form)
+
     def form_invalid(self, form):
-        return redirect('/product/' + str(form.product))
+        return redirect('/product/' + str(form.data.get('product')))
 
     def get_form_kwargs(self, **kwargs):  # form을 생성할때 어떤 인자값을 전달해서 만들건지 결정하는 함수
         kw = super().get_form_kwargs(**kwargs)
